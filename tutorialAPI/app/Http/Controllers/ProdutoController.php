@@ -28,13 +28,13 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'produto' => 'required|string|max:255',
-            'fornecedor' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'preco_venda' => 'required|numeric',
-            'data_validade' => 'required|date',
-        ]);
+        // $request->validate([
+        //     'produto' => 'required|string|max:255',
+        //     'fornecedor' => 'required|string|max:255',
+        //     'tipo' => 'required|string|max:255',
+        //     'preco_venda' => 'required|numeric',
+        //     'data_validade' => 'required|date',
+        // ]);
 
         $produto = Produto::create($request->all());
         return response()->json($produto, 201);
@@ -59,21 +59,32 @@ class ProdutoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Produto $produto)
-    {
-        $request->validate([
-            'produto' => 'required|string|max:255',
-            'fornecedor' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'preco_venda' => 'required|numeric',
-            'data_validade' => 'required|date',
-        ]);
+    // public function update(Request $request, Produto $produto)
+    // {
+    //     // $request->validate([
+    //     //     'produto' => 'required|string|max:255',
+    //     //     'fornecedor' => 'required|string|max:255',
+    //     //     'tipo' => 'required|string|max:255',
+    //     //     'preco_venda' => 'required|numeric',
+    //     //     'data_validade' => 'required|date',
+    //     // ]);
 
-        $produto = Produto::findOrFail($id);
+    //     $produto = Produto::findOrFail($id);
+    //     $produto->update($request->all());
+    //     return response()->json($produto);
+    // }
+
+    public function update(Request $request, $id){
+        $produto = Produto::find($id);
+
+        if (!$produto) {
+            return response()->json(['message' => 'Produto não encontrado'], 404);
+        }
+
         $produto->update($request->all());
-        return response()->json($produto);
-    }
 
+        return response()->json($produto, 200);
+    }
     /**
      * Remove the specified resource from storage.
      */

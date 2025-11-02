@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function ProdutoCreate() {
   const [produto, setProduto] = useState("");
   const [fornecedor, setFornecedor] = useState("");
+  const [tipo, setTipo] = useState("");
   const [preco_venda, setPrecoVenda] = useState("");
   const [data_validade, setDataValidade] = useState("");
 

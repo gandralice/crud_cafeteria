@@ -7,9 +7,9 @@ function ProdutoUpdate() {
 
   const [produto, setProduto] = useState("");
   const [fornecedor, setFornecedor] = useState("");
-  const [tipo, setTipo] = useState(""); // NOVO
+  const [tipo, setTipo] = useState("");
   const [preco_venda, setPrecoVenda] = useState("");
-  const [data_validade, setDataValidade] = useState(""); // NOVO
+  const [data_validade, setDataValidade] = useState("");
 
   const navigate = useNavigate();
 
