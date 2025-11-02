@@ -1,51 +1,81 @@
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Produto() {
+function ProdutoIndex() {
+  const [produtos, setProdutos] = useState([]);
 
-    const [produtos, setProdutos] = useState([])
-    const navigate = useNavigate();
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/produto")
+      .then((response) => {
+        setProdutos(response.data);
+      })
+      .catch((error) => {
+        console.error("Houve um erro!", error);
+      });
+  }, []);
 
-    // A função(1o parâmetro do useEffect) executa apenas uma vez na montagem do 
-    // componente, pois o vetor (segundo parâmetro) é vazio
-    useEffect(
-        function () {
+  const deleteProduto = (id) => {
+    axios
+      .delete(`http://127.0.0.1:8000/api/produto/${id}`)
+      .then(() => {
+        // atualiza a lista de produtos após a exclusão
+        setProdutos(produtos.filter((produto) => produto.id !== id));
+      })
+      .catch((error) => {
+        console.error("Houve um erro!", error);
+      });
+  };
 
-            async function consultar(){
-                // Consulta a API
-                const resposta = await axios.get("http://localhost:8000/api/produto")
-                console.log(resposta) // pressione F12 e no console veja o que veio da API no backend
-                //Armazena resposta no useState
-                setProdutos(resposta.data)
-            }
+  return (
+    <div className="container mt-4">
+      <h2>Lista de Produtos da Cafeteria</h2>
+      <Link to="/produto/create" className="btn btn-primary mb-2">
+        Criar Produto
+      </Link>
 
-            consultar();
-        }
-        , []
-    )
-
-    // retorna tabela HTML contendo os dados dos produtos obtidos na API
-    return(
-        <div className="container">
-            <table>
-                <caption>
-                    <h1>Produtos</h1>
-                    <button style={{margin:5}} onClick={ () => navigate('/produto/create') }>Novo</button>
-                </caption>
-                <thead><tr><th>Nome</th><th>Preço</th></tr></thead>
-                <tbody>
-                    {produtos==null ? null : produtos.map( 
-                        (produto) => 
-                        <tr key={produto.id}>
-                        <td>{produto.nome}</td>
-                        <td>{produto.preco}</td>
-                        <td><button onClick={ () => navigate(`/produto/update/${produto.id}`) }>Alterar</button></td>
-                        <td><button onClick={ () => navigate(`/produto/delete/${produto.id}`) }>Excluir</button></td>
-                        </tr> )
-                    }
-                </tbody>
-            </table>
-        </div>
-    )
+      <table className="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Fornecedor</th>
+            <th>Tipo</th>
+            <th>Preço (R$)</th>
+            <th>Data de Validade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {produtos.map((produto) => (
+            <tr key={produto.id}>
+              <td>{produto.id}</td>
+              <td>{produto.produto}</td>
+              <td>{produto.fornecedor}</td>
+              <td>{produto.tipo}</td>
+              <td>{produto.preco_venda}</td>
+              <td>{produto.data_validade}</td>
+              <td>
+                <Link
+                  to={`/produto/update/${produto.id}`}
+                  className="btn btn-sm btn-info me-2"
+                >
+                  Editar
+                </Link>
+                <button
+                  onClick={() => deleteProduto(produto.id)}
+                  className="btn btn-sm btn-danger"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
+
+export default ProdutoIndex;

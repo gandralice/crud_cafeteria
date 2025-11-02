@@ -28,7 +28,16 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        return Produto::create( $request->all() );
+        $request->validate([
+            'produto' => 'required|string|max:255',
+            'fornecedor' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+            'preco_venda' => 'required|numeric',
+            'data_validade' => 'required|date',
+        ]);
+
+        $produto = Produto::create($request->all());
+        return response()->json($produto, 201);
     }
 
     /**
@@ -52,8 +61,17 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
-        $produto->update( $request->all() );
-        return $produto;
+        $request->validate([
+            'produto' => 'required|string|max:255',
+            'fornecedor' => 'required|string|max:255',
+            'tipo' => 'required|string|max:255',
+            'preco_venda' => 'required|numeric',
+            'data_validade' => 'required|date',
+        ]);
+
+        $produto = Produto::findOrFail($id);
+        $produto->update($request->all());
+        return response()->json($produto);
     }
 
     /**
