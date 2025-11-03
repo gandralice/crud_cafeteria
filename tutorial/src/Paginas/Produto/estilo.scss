@@ -1,4 +1,6 @@
-@import url(style/form.css);
+html {
+  background-color: #fff8dc;
+}
 .container {
   display: flex;
   justify-content: center;
@@ -42,4 +44,8 @@
   a {
     margin: 5px;
   }
+}
+h1 {
+  text-align: center;
+  margin: 20px;
 }

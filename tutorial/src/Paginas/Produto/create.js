@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function ProdutoCreate() {
+  // 1. Declarar os 5 estados para os 5 campos
   const [produto, setProduto] = useState("");
   const [fornecedor, setFornecedor] = useState("");
   const [tipo, setTipo] = useState("");
@@ -14,6 +15,7 @@ function ProdutoCreate() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // 2. Enviar os 5 campos para a API
     axios
       .post("http://127.0.0.1:8000/api/produto", {
         produto: produto,
@@ -24,6 +26,7 @@ function ProdutoCreate() {
       })
       .then((response) => {
         console.log(response);
+        // 3. Redirecionar para a lista em caso de sucesso
         navigate("/produto");
       })
       .catch((error) => {
@@ -34,6 +37,7 @@ function ProdutoCreate() {
   return (
     <div className="container mt-4">
       <h2>Criar Novo Produto</h2>
+      {/* 4. Formulário com os 5 campos */}
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-2">
           <label htmlFor="produto">Produto</label>
@@ -84,7 +88,7 @@ function ProdutoCreate() {
         </div>
 
         <div className="form-group mb-3">
-          <label htmlFor="preco_venda">Preço de Venda</label>
+          <label htmlFor="preco_venda">Preço de Venda (R$)</label>
           <input
             type="number"
             step="0.01"

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 function ProdutoUpdate() {
   const { id } = useParams();
 
+  // 1. Declarar os 5 estados
   const [produto, setProduto] = useState("");
   const [fornecedor, setFornecedor] = useState("");
   const [tipo, setTipo] = useState("");
@@ -13,11 +14,13 @@ function ProdutoUpdate() {
 
   const navigate = useNavigate();
 
+  // 2. Buscar dados atuais do produto na API
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/produto/${id}`)
       .then((response) => {
         const data = response.data;
+        // 3. Preencher os 5 estados com os dados da API
         setProduto(data.produto);
         setFornecedor(data.fornecedor);
         setTipo(data.tipo);
@@ -29,6 +32,7 @@ function ProdutoUpdate() {
       });
   }, [id]);
 
+  // 4. Enviar a atualização (PUT)
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,6 +56,7 @@ function ProdutoUpdate() {
   return (
     <div className="container mt-4">
       <h2>Editar Produto: {produto}</h2>
+      {/* 5. Formulário de edição com os 5 campos */}
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-2">
           <label htmlFor="produto">Produto</label>
@@ -102,7 +107,7 @@ function ProdutoUpdate() {
         </div>
 
         <div className="form-group mb-3">
-          <label htmlFor="preco_venda">Preço de Venda</label>
+          <label htmlFor="preco_venda">Preço de Venda (R$)</label>
           <input
             type="number"
             step="0.01"

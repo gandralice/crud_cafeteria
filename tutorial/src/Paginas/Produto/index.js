@@ -6,6 +6,7 @@ function ProdutoIndex() {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
+    // 1. Buscar os produtos da API
     axios
       .get("http://127.0.0.1:8000/api/produto")
       .then((response) => {
@@ -20,7 +21,6 @@ function ProdutoIndex() {
     axios
       .delete(`http://127.0.0.1:8000/api/produto/${id}`)
       .then(() => {
-        // atualiza a lista de produtos após a exclusão
         setProdutos(produtos.filter((produto) => produto.id !== id));
       })
       .catch((error) => {
@@ -36,6 +36,7 @@ function ProdutoIndex() {
       </Link>
 
       <table className="table table-bordered table-striped">
+        {/* 2. Cabeçalho da tabela atualizado */}
         <thead>
           <tr>
             <th>ID</th>
@@ -47,6 +48,7 @@ function ProdutoIndex() {
             <th>Ações</th>
           </tr>
         </thead>
+        {/* 3. Corpo da tabela atualizado */}
         <tbody>
           {produtos.map((produto) => (
             <tr key={produto.id}>
