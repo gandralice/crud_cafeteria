@@ -1,51 +1,158 @@
+/* estilo.scss */
+
+/* Variáveis */
+$cor-fundo: #fff8dc;
+$cor-primaria: #6f4e37;
+$cor-secundaria: #d2b48c;
+$cor-botao: #007bff;
+$cor-botao-hover: #0056b3;
+$cor-botao-danger: #dc3545;
+
+/* Reset e fundo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
-  background-color: #fff8dc;
+  background-color: $cor-fundo;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    input[type="submit"] {
-      margin-top: 10px;
-      color: white;
-      background-color: #007bff;
-    }
-  }
-  dl {
-    display: flex;
-    flex-direction: column;
-    dt {
-      margin: 5px 0;
-    }
-    dd {
-      margin: 0 0 10px 20px;
-    }
-    button[title="Confirmar"] {
-      margin-top: 10px;
-      color: white;
-      background-color: red;
-    }
-  }
-  table {
-    border-collapse: collapse;
-    th,
-    td {
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  }
-  a {
-    margin: 5px;
-  }
+
+body {
+  padding: 20px;
 }
-h1 {
+
+/* Cabeçalho */
+h1,
+h2 {
   text-align: center;
-  margin: 20px;
+  color: $cor-primaria;
+  margin-bottom: 20px;
+}
+
+/* Container principal */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Formulário */
+form {
+  background-color: $cor-secundaria;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  label {
+    font-weight: 600;
+  }
+
+  input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    border-color: $cor-primaria;
+    outline: none;
+  }
+
+  button {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &.btn-primary {
+      background-color: $cor-botao;
+
+      &:hover {
+        background-color: $cor-botao-hover;
+      }
+    }
+
+    &.btn-danger {
+      background-color: $cor-botao-danger;
+
+      &:hover {
+        background-color: darken($cor-botao-danger, 10%);
+      }
+    }
+  }
+}
+
+/* Tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+
+  th {
+    background-color: $cor-primaria;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: lighten($cor-secundaria, 20%);
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 5px;
+
+    &.btn-info {
+      background-color: #17a2b8;
+
+      &:hover {
+        background-color: #117a8b;
+      }
+    }
+  }
+}
+
+/* Links de ação fora da tabela */
+a.criar-produto {
+  display: inline-block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: $cor-botao;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  table,
+  th,
+  td {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  form {
+    width: 100%;
+  }
 }
